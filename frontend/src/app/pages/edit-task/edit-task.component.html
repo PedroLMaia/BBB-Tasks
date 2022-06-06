@@ -1,0 +1,22 @@
+<div class="logo">
+    <a href="#"><img id="logo" src="/assets/Frame.png"></a>
+</div>
+
+<div class="Frame-centralizado">
+    <div class="Frame-centrado">
+        <div class="caixa-categoria">
+            <h1 class="titulo">
+                Editar task
+            </h1>
+            <div class="field is-grouped">
+                <input #tituloDaTask class="input is-medium" type="text" placeholder="Insira o novo nome da task">
+                <input #dateDaTask class="input is-medium" type="date">
+            </div>
+            <div class="control">
+                <a class="button" id="homepage" routerLink="/categorias">Voltar</a>
+                <div class="space"></div>
+                <a class="button" routerLink="/"(click)="updateTask(tituloDaTask.value, dateDaTask.value)">Save</a>
+            </div>
+        </div>
+    </div>
+</div>

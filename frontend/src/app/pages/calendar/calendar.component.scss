@@ -1,0 +1,29 @@
+.Frame-externo {
+    display: inline-block;
+    box-sizing: border-box;
+
+    position: fixed;
+    left: 22%;
+    right: 22%;
+    top: 12%;
+    bottom: 2%;
+    background: rgba(253, 252, 255, 0.22);
+    border: 1px solid #EFF0F7;
+    box-shadow: 0px 8px 25px rgba(13, 10, 44, 0.06);
+    border-radius: 40px;
+}
+
+.calendario {
+    width: 96%; 
+    display: inline-block;
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-right: 2px;
+    margin-bottom: 2%;
+    // height: 100%;
+    // margin-top: 100px;
+    // size-adjust: 80%;
+    background-color: #ffffff !important;
+    box-shadow: 0px 8px 25px rgba(13, 10, 44, 0.5);
+    // border-radius: 100px;
+}

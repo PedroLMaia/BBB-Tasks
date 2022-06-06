@@ -1,0 +1,106 @@
+<div class="logo" style="text-align: center;">
+  <a href="#"><img id="logo" src="/assets/Frame.png"></a>
+  <div class="button" (click)="logout()" style="display:flex; flex-grow: 1; margin: 0; position: absolute; top: 8%; left: 88%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);background: #ffffff; color:blueviolet;  box-shadow: 0px 3px 12px rgba(74, 58, 255, 0.18); border-radius: 56px;border: 1px; font-style: normal;font-weight: 400;font-size: 18px;line-height: 20px;text-align: center;flex: none;order: 0;flex-grow: 0;">Logout</div>
+  <div class="button" routerLink="/calendario" style="display:flex; flex-grow: 1; margin: 0; position: absolute; top: 8%; left: 81.5%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);background: #ffffff; color:blueviolet;  box-shadow: 0px 3px 12px rgba(74, 58, 255, 0.18); border-radius: 56px;border: 1px; font-style: normal;font-weight: 400;font-size: 18px;line-height: 20px;text-align: center;flex: none;order: 0;flex-grow: 0;">Calendario</div>
+</div>
+
+<div class="Frame-externo">
+
+  <div class="Frame-interno-esquerda">
+
+    <div class="Frame-texto-categoria">
+
+      <div class="top-bar">
+        <h1 class="title-categoria">
+          Categorias
+        </h1>
+        <div class="button" [routerLink]="['/edit-categoria', selectedCategoriaId]">
+          <div class="icon">
+            <i class="fas fa-edit"></i>
+          </div>
+        </div>
+        <div class="button" (click)="onDeleteCategoriaClick()">
+          <div class="icon">
+            <i class="fas fa-trash"></i>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="Frame-categoria">
+
+      <div class="list-menu">
+        <a class="list-menu-item " *ngFor="let categoria of categorias" [routerLink]="['/categorias', categoria._id]"
+          routerLinkActive="is-active">
+          <p>{{categoria.title}}</p>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="Frame-interno-direita">
+
+    <div class="Frame-texto-tasks">
+
+      <h1 class="title-tasks">
+        Tasks
+      </h1>
+
+    </div>
+
+    <div class="Frame-tasks">
+      <!-- Tasks aqui -->
+
+      <div class="task" *ngFor="let task of tasks" (click)="clickNaTask(task)"
+        [ngClass]="{'completed': task.completada}">
+
+        <div class="task-text">
+          <p>{{task.title}}</p>
+        </div>
+
+        <div class="task-buttons">
+          <button class="button" style="margin-right: 5px;"
+            [routerLink]="['/categorias', selectedCategoriaId, 'edit-task', task._id]">
+            <div class="icon">
+              <i class="fas fa-edit"></i>
+            </div>
+          </button>
+          <button class="button is-danger" (click)="onDeleteTaskClick(task)">
+            <div class="icon">
+              <i class="fas fa-trash"></i>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <button class="button-nova-task" routerLink="./nova-task">Nova task +</button>
+  </div>
+  <button class="button-nova-categoria" routerLink="/nova-categoria">Nova categoria +</button>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- <div class="centered-content">
+  <div class="task-manager-container">
+    <div class="sidebar has-background-white">
+      <h1 class="title has-text-primary">
+        Categorias
+      </h1>
+    </div>
+    <div class="task-list-container has-background-light">
+      <h1 class="title has-text-primary">
+        Lists
+      </h1>
+    </div>
+  </div>
+</div> -->
