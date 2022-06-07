@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const nodemailer = require('nodemailer')
 
 const { mongoose } = require('./db/mongoose');
 
@@ -14,6 +15,8 @@ const jwt = require('jsonwebtoken');
 const res = require('express/lib/response');
 const { JsonWebTokenError } = require('jsonwebtoken');
 // const { User } = require('./db/models/user.model');
+
+var EmailDeEnvio = "lilpeepdowntown@gmail.com";
 
 //================================================= Mediador ==================================================//
 
@@ -192,8 +195,28 @@ app.post('/categorias/:categoriaId/tasks', authenticate, (req, res) => {
             let newTask = new Task({
                 title: req.body.title,
                 data: req.body.data,
-                _categoriaId: req.params.categoriaId
+                _categoriaId: req.params.categoriaId,
             });
+            //envio de email
+            let transporter = nodemailer.createTransport({ 
+                service: 'gmail', 
+                auth: { 
+                   user: 'lilpeepdowntown@gmail.com', 
+                   pass: 'aott snos uaoc iwln' 
+                 } 
+                });
+            
+                var message = {
+                from: "lilpeepdowntown@gmail.com",
+                to: EmailDeEnvio,
+                subject: "BBB Tasks [" + req.body.title + "]",
+                text: req.body.title,
+                html: "<p>A atividade [" + req.body.title +"] na data [" + req.body.data + "] foi adicionada a sua agenda com sucesso!! Fique atento as datas!"
+              };
+              console.log('Email enviado com sucesso!!! Destinatario: ' + EmailDeEnvio + ', mensagem: ' + "A atividade [" + req.body.title +"] na data [" + req.body.data + "] foi adicionada a sua agenda com sucesso!! Fique atento as datas!" + '.')
+              transporter.sendMail(message)
+
+            //fim do envio de email 
             newTask.save().then((newTaskDoc) => {
                 res.send(newTaskDoc);
             })
@@ -275,9 +298,11 @@ app.delete('/categorias/:categoriaId/tasks/:taskId', authenticate, (req, res) =>
 app.post('/users', (req, res) => {
     //User sing up
     let body = req.body;
+    EmailDeEnvio = req.body.email;
     let newUser = new User(body);
 
     newUser.save().then(() => {
+        console.log(EmailDeEnvio)
         return newUser.createSession();
     }).then((refreshToken) => {
         return newUser.generateAccessAuthToken().then((accessToken) => {
@@ -300,6 +325,8 @@ app.post('/users/login', (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
 
+    EmailDeEnvio = email;
+
     User.findByCredentials(email, password).then((user) => {
         return user.createSession().then((refreshToken) => {
             // Sessão criada com sucesso - refreshToken retornado.
@@ -307,6 +334,7 @@ app.post('/users/login', (req, res) => {
 
             return user.generateAccessAuthToken().then((accessToken) => {
                 // token de autenticação de acesso gerado com sucesso, agora retornamos um objeto contendo os tokens de autenticação
+                console.log("Email connectado com sucesso " + EmailDeEnvio)
                 return { accessToken, refreshToken }
             });
         }).then((authTokens) => {
